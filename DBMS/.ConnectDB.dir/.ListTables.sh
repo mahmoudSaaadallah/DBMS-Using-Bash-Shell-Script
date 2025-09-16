@@ -13,6 +13,5 @@ if [ -z "$tables" ]; then
     echo -e "${RED}No tables found in database '${WDB}'.${NC}"
 else
     echo -e "${GREEN}Tables in '${WDB}':${NC}"
-    echo "$tables"
+    echo "$tables" | nl -w2 -s". "
 fi
-

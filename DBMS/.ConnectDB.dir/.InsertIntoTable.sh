@@ -7,7 +7,12 @@ YELLOW='\033[1;33m'
 NC='\033[0m'
 
 WDB=$1
-read -p "Enter the table name: " tableName
+read -p "Enter the table name (or type 'exit' to cancel): " tableName
+
+if [[ "$tableName" =~ ^(exit|quit|back)$ ]]; then
+    echo -e "${YELLOW}Cancelled insert.${NC}"
+    exit 0
+fi
 
 metaFile="./$WDB/$tableName.meta"
 dataFile="./$WDB/$tableName"
@@ -17,11 +22,9 @@ if [ ! -f "$metaFile" ] || [ ! -f "$dataFile" ]; then
     exit 1
 fi
 
-# Read meta columns into an array (excluding header)
 mapfile -t metaCols < <(tail -n +2 "$metaFile")
 
 while true; do
-    # Auto-increment RN
     if [ "$(wc -l < "$dataFile")" -gt 1 ]; then
         lastRN=$(tail -n +2 "$dataFile" | tail -n 1 | cut -d ':' -f1)
         newRN=$((lastRN + 1))
@@ -48,9 +51,6 @@ while true; do
                     echo -e "${RED}String cannot be empty.${NC}"
                     continue
                 fi
-            else
-                echo -e "${RED}Unknown column type '$colType'.${NC}"
-                exit 1
             fi
 
             row="$row:$value"
@@ -67,4 +67,3 @@ while true; do
         break
     fi
 done
-
