@@ -21,6 +21,7 @@ while true; do
 
 		if [[ $confirm == [Yy] ]]; then
 			rm -r "./$WDB/$tableName"
+			rm -r "./$WDB/$tableName.meta"
 			echo -e "\n${GREEN}$tableName table has been removed.${NC}"
 		else
 			echo -e "${YELLOW}! Cancelled.${NC}"

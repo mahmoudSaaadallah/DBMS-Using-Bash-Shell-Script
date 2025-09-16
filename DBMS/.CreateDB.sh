@@ -39,11 +39,20 @@ while true; do
 			*) echo -e "${RED}You have entered an invalid choice!${NC}" ;;
 		esac
 	else
-		mkdir "./DataBases/$DBName"
-		echo ""
-		echo -e "${GREEN}The $DBName DataBase has been created."
-		./.ConnectDB.sh ./DataBases/"$DBName"
-		break
+		if [ -d ./DataBases ]; then
+			mkdir "./DataBases/$DBName"
+			echo ""
+			echo -e "${GREEN}The $DBName DataBase has been created.${NC}"
+			./.ConnectDB.sh ./DataBases/"$DBName"
+			break
+		else 
+			mkdir "./DataBases"
+			mkdir "./DataBases/$DBName"
+			echo ""
+			echo -e "${GREEN}The $DBName DataBase has been created.${NC}"
+			./.ConnectDB.sh ./DataBases/"$DBName"
+			break
+		fi
 	fi
 done
 

@@ -7,7 +7,7 @@ NC='\033[0m'
 
 WDB="$1"
 
-tables=$(find "$WDB" -maxdepth 1 -type f -exec basename {} \;)
+tables=$(find "$WDB" -maxdepth 1 -type f ! -name "*.meta" -exec basename {} \;)
 
 if [ -z "$tables" ]; then
     echo -e "${RED}No tables found in database '${WDB}'.${NC}"

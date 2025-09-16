@@ -6,10 +6,15 @@ GREEN='\033[0;32m'
 NC='\033[0m'
 
 while true; do
-	read -p "Enter the name of the Database: " DBN
-	if [ -z "$DBN" ]; then
-		echo -e "${RED}The name of the Database cannot be empty!${NC}"
-		continue
+	if [ $# == 0 ]; then
+		read -p "Enter the name of the Database: " DBN
+		if [ -z "$DBN" ]; then
+			echo -e "${RED}The name of the Database cannot be empty!${NC}"
+			continue
+		fi
+	else
+		DBN=$(basename "$1")
+		echo "$DBN"
 	fi
 
 	if [ -d "./DataBases/$DBN" ]; then
@@ -24,29 +29,33 @@ while true; do
 			echo "4. Insert Into Table."
 			echo "5. Delete From Table."
 			echo "6. Update Table."
+			echo "7. Select From Table."
 			echo "0. Quit."
 			read -p ":> " choice		
 	
 			case $choice in
 				1) 
-					./.ConnectDB.dir/.CreateTable.sh "$DBN"
+					./.ConnectDB.dir/.CreateTable.sh "./DataBases/$DBN"
 					;;
 				2) 
-					./.ConnectDB.dir/.ListTables.sh "$DBN"
+					./.ConnectDB.dir/.ListTables.sh "./DataBases/$DBN"
 					;;		
 				3)
-					./.ConnectDB.dir/.DropTable.sh "$DBN"
+					./.ConnectDB.dir/.DropTable.sh "./DataBases/$DBN"
 					;;
 				4) 
-					./.ConnectDB.dir/.InsertIntoTable.sh "$DBN"
+					./.ConnectDB.dir/.InsertIntoTable.sh "./DataBases/$DBN"
 					;;
 				5)
-					./.ConnectDB.dir/.DeleteFromTable.sh "$DBN"
+					./.ConnectDB.dir/.DeleteFromTable.sh "./DataBases/$DBN"
 					;;
 					
 				6) 	
-					./.ConnectDB.dir/.UpdateTable.sh "$DBN"
+					./.ConnectDB.dir/.UpdateTable.sh "./DataBases/$DBN"
 				 	;;
+				7)
+					./.ConnectDB.dir/.SelectFromTable.sh "./DataBases/$DBN"
+					;;			
 				0)
 					echo -e "${GREEN}Disconnected from '$DBN'. Returning to main menu...${NC}"
 					exit
