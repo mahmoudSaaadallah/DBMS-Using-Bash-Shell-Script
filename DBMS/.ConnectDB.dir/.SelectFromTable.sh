@@ -47,17 +47,22 @@ if [[ "$filter" =~ ^[Yy]$ ]]; then
     fi
 
     # Print matching rows (skip header line in dataFile)
-    tail -n +2 "$dataFile" | while IFS=: read -r -a row; do
-        if [[ "${row[colIndex-1]}" == *"$filterVal"* ]]; then
-            for field in "${row[@]}"; do
-                printf "%-20s" "$field"
-            done
-            echo ""
-        else
-            echo -e "${RED}There is no matched Data!${NC}"
-            break
-        fi
-    done
+    
+    flgMatch=false
+
+while IFS=: read -r -a row; do
+    if [[ "${row[colIndex-1]}" == *"$filterVal"* ]]; then
+        flgMatch=true
+        for field in "${row[@]}"; do
+            printf "%-20s" "$field"
+        done
+        echo ""
+    fi
+done < <(tail -n +2 "$dataFile")  
+
+if [[ "$flgMatch" == false ]]; then
+    echo -e "${YELLOW}No matching records found.${NC}"
+fi
 else
     # Print all rows
     tail -n +2 "$dataFile"  | sort -t: -k1,1n | while IFS=: read -r -a row; do
