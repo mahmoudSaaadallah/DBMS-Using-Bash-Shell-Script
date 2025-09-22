@@ -6,7 +6,7 @@ GREEN='\033[0;32m'
 NC='\033[0m'
 
 while true; do
-    # If no argument provided → ask user
+    
     if [[ $# -eq 0 ]]; then
         read -p "Enter the name of the Database (or type 'exit' to return): " DBN
         if [[ -z "$DBN" ]]; then
@@ -19,7 +19,7 @@ while true; do
             break
         fi
     else
-        DBN=$(basename "$1")   # strip path if given
+        DBN=$(basename "$1")   
         shift                  # clear argument
     fi
 
@@ -27,7 +27,7 @@ while true; do
         echo -e "\n${GREEN}Connected to '$DBN' Database.${NC}"
         echo -e "${GREEN}------------------------------------------${NC}"
 
-        # Table operations menu
+        
         while true; do
             echo -e "\n${GREEN}Select from the list below: ${NC}"
             echo "1. Create Table"	
@@ -58,10 +58,10 @@ while true; do
                     ;;
             esac
         done
-        break   # exit outer while (return control to DBMS.sh)
+        break  
     else
         echo -e "${RED}The '$DBN' Database does not exist!${NC}"
-        [[ $# -gt 0 ]] && break   # if DB was passed as arg, don’t loop forever
+        [[ $# -gt 0 ]] && break   
         continue
     fi
 done

@@ -8,13 +8,13 @@ NC='\033[0m'
 while true; do
     read -p "Enter the name of the new Database (letters, numbers, underscores only): " DBName
     
-    # Validate empty
+
     if [ -z "$DBName" ]; then
         echo -e "${RED}Database Name cannot be empty.${NC}"
         continue
     fi
 
-    # Validate allowed characters
+
     if [[ ! "$DBName" =~ ^[A-Za-z0-9_]+$ ]]; then
         echo -e "${RED}Invalid name. Use only letters, numbers, and underscores.${NC}"
         continue

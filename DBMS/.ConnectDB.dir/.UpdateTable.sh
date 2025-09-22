@@ -21,10 +21,10 @@ if [[ ! -f "$metaFile" || ! -f "$dataFile" ]]; then
     echo -e "${RED}Table '$tableName' does not exist in database '$WDB'.${NC}"
     exit 1
 fi
-# Get column names
+
 mapfile -t columns < <(awk -F: '{print $1}' "$metaFile")
 
-# Show table header
+
 echo -e "${GREEN}Table: $tableName${NC}"
 printf "${YELLOW}%-20s${NC}" "${columns[@]}"
 echo ""
@@ -37,7 +37,7 @@ echo "------------------------------------------------------------"
         done
         echo ""
     done
-# Show current rows
+
 # echo -e "${YELLOW}Current rows in '$tableName':${NC}"
 # column -s: -t "$dataFile"
 
@@ -47,16 +47,16 @@ if ! grep -q "^$RN:" "$dataFile"; then
     exit 1
 fi
 
-# Read metadata (skip RN)
+
 mapfile -t metaCols < <(tail -n +2 "$metaFile")
 
-# Extract current row
+
 currentRow=$(grep "^$RN:" "$dataFile")
 IFS=':' read -ra fields <<< "$currentRow"
 
 newRow="$RN"
 
-index=2 # start from second column (since first is RN)
+index=2 
 for metaLine in "${metaCols[@]}"; do
     colName="${metaLine%%:*}"
     colType="${metaLine##*:}"
@@ -77,7 +77,7 @@ for metaLine in "${metaCols[@]}"; do
     ((index++))
 done
 
-# Replace old row with new row
+
 grep -v "^$RN:" "$dataFile" > "$dataFile.tmp"
 echo "$newRow" >> "$dataFile.tmp"
 mv "$dataFile.tmp" "$dataFile"

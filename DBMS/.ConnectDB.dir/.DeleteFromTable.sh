@@ -22,11 +22,10 @@ if [[ ! -f "$metaFile" || ! -f "$dataFile" ]]; then
     exit 1
 fi
 
-# Show current rows
-# echo -e "${YELLOW}Current rows in '$tableName':${NC}"
+
 mapfile -t columns < <(awk -F: '{print $1}' "$metaFile")
 
-# Show table header
+
 echo -e "${GREEN}Table: $tableName${NC}"
 printf "${YELLOW}%-20s${NC}" "${columns[@]}"
 echo ""
@@ -37,7 +36,7 @@ tail -n +2 "$dataFile" | while IFS=: read -r -a row; do
         done
         echo ""
     done
-# column -s: -t "$dataFile"
+
 
 while true; do
     read -p "Enter the RN (Record Number) of the row to delete (or 'exit' to cancel): " RN
@@ -52,7 +51,7 @@ while true; do
         continue
     fi
 
-    # Keep header + rows not matching RN
+    
     grep -v "^$RN:" "$dataFile" > "$dataFile.tmp"
     mv "$dataFile.tmp" "$dataFile"
 

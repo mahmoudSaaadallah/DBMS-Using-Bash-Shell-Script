@@ -22,23 +22,20 @@ if [[ ! -f "$metaFile" || ! -f "$dataFile" ]]; then
     exit 1
 fi
 
-# Get column names
+
 mapfile -t columns < <(awk -F: '{print $1}' "$metaFile")
 
-# Show table header
-echo -e "${GREEN}Table: $tableName${NC}"
-printf "${YELLOW}%-20s${NC}" "${columns[@]}"
-echo ""
-echo "------------------------------------------------------------"
 
-# Ask if user wants filtering
+
+
 read -p "Do you want to filter rows? (y/n): " filter
 if [[ "$filter" =~ ^[Yy]$ ]]; then
-    echo -e "${YELLOW}Available columns:${NC} ${columns[*]}"
+    printf "${YELLOW}%-20s${NC}" "${columns[@]}"
+    echo ""
     read -p "Enter column name for filter: " filterCol
     read -p "Enter value to match: " filterVal
 
-    # Find column index
+    
     colIndex=$(awk -v col="$filterCol" -F: '{if($1==col) print NR}' "$metaFile")
 
     if [[ -z "$colIndex" ]]; then
@@ -46,11 +43,15 @@ if [[ "$filter" =~ ^[Yy]$ ]]; then
         exit 1
     fi
 
-    # Print matching rows (skip header line in dataFile)
     
+    echo -e "${GREEN}Table: $tableName${NC}"
+    printf "${YELLOW}%-20s${NC}" "${columns[@]}"
+    echo ""
+    echo "------------------------------------------------------------" 
     flgMatch=false
 
 while IFS=: read -r -a row; do
+    
     if [[ "${row[colIndex-1]}" == *"$filterVal"* ]]; then
         flgMatch=true
         for field in "${row[@]}"; do

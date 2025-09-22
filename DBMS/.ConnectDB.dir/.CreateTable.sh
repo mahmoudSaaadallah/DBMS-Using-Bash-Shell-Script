@@ -60,7 +60,7 @@ while true; do
         ((counter++))
     done
     touch "./$WDB/$tableName"
-    # Create data file with header
+    
     awk -F: '{print $1}' "./$WDB/$tableName.meta" | paste -sd':' - >> "./$WDB/$tableName"
 
     echo -e "${GREEN}Table '$tableName' created successfully with $col columns.${NC}"
