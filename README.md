@@ -63,7 +63,128 @@ Ensure you have a Bash shell environment (Linux/Unix/WSL/macOS). No external dat
     ./DBMS.sh
     ```
 
-## 📂 Project Structure
+## 📖 Usage Walkthrough
+
+1.  **Launch:** Start the application. You will be prompted for a password if authentication is set up.
+2.  **Main Menu:**
+    - Choose `1` to create a new database (e.g., `SchoolDB`).
+    - The application automatically connects to the new database.
+3.  **Database Menu:**
+    - Choose `1` to create a table. You will be asked to define columns and data types.
+    - Choose `4` to insert data into your table.
+    - Choose `7` to select and view data formatted in the terminal.
+4.  **Navigation:** Use `0` to go back to the previous menu or exit.
+
+## 🖥️ Example Session
+
+Here is a simulation of a user creating a database and querying a table:
+
+```bash
+$ ./DBMS.sh
+Enter admin password:
+Authenticated.
+Hello, and welcome to DBMS CLI App!
+Choose from the list below:
+1. Create Database.
+2. List Databases.
+3. Connect to Database.
+4. Drop Database.
+0. Quit.
+> 1
+
+Enter the name of the new Database (letters, numbers, underscores only): CompanyDB
+
+The CompanyDB Database has been created.
+
+Connected to 'CompanyDB' Database.
+------------------------------------------
+
+Select from the list below:
+1. Create Table
+2. List Tables
+3. Drop Table
+4. Insert Into Table
+5. Delete From Table
+6. Update Table
+7. Select From Table
+0. Disconnect and Return to Main Menu
+-------------------------------------
+:> 1
+Enter table name (or type 'exit' to cancel): Employees
+How many columns? 2
+Enter name for column 1: Name
+Enter data type (string/number): string
+Name column has been added.
+Enter name for column 2: Position
+Enter data type (string/number): string
+Position column has been added.
+Table 'Employees' created successfully with 2 columns.
+
+Select from the list below:
+1. Create Table
+2. List Tables
+3. Drop Table
+4. Insert Into Table
+5. Delete From Table
+6. Update Table
+7. Select From Table
+0. Disconnect and Return to Main Menu
+-------------------------------------
+:> 4
+Enter the table name (or type 'exit' to cancel): Employees
+Enter value for 'Name' (string): Alice
+Enter value for 'Position' (string): Manager
+Row inserted successfully: 1:Alice:Manager
+Do you want to insert another row? (y/n): y
+Enter value for 'Name' (string): Bob
+Enter value for 'Position' (string): Developer
+Row inserted successfully: 2:Bob:Developer
+Do you want to insert another row? (y/n): n
+Returning to menu...
+
+Select from the list below:
+1. Create Table
+2. List Tables
+3. Drop Table
+4. Insert Into Table
+5. Delete From Table
+6. Update Table
+7. Select From Table
+0. Disconnect and Return to Main Menu
+-------------------------------------
+:> 7
+
+Enter the table name to view (or 'exit' to cancel): Employees
+Do you want to filter rows? (y/n): n
+Table: Employees
+ID                  Name                Position
+------------------------------------------------------------
+1                   Alice               Manager
+2                   Bob                 Developer
+
+Select from the list below:
+1. Create Table
+2. List Tables
+3. Drop Table
+4. Insert Into Table
+5. Delete From Table
+6. Update Table
+7. Select From Table
+0. Disconnect and Return to Main Menu
+-------------------------------------
+:> 0
+Disconnected from 'CompanyDB'. Returning to main menu...
+Choose from the list below:
+1. Create Database.
+2. List Databases.
+3. Connect to Database.
+4. Drop Database.
+0. Quit.
+> 0
+Goodbye
+```
+
+## � Project Structure
 
 The project is modularized into separate scripts for maintainability:
 
